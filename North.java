@@ -1,10 +1,15 @@
-
+import java.util.Random;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.Scanner;
 public class North {
-   PlayerSetUp setUp = new PlayerSetUp();
-   setUp.SetPlayerUp();
-   //Static variable
+    
+    //player object 
+   	static PlayerSetUp player = new PlayerSetUp(); 
+    static Scanner myScanner = new Scanner(System.in);
+   
+   //Static instance variable
    private static int frozensunlight;
-  
 
   //north constructor(takes in element as parameter)
 	public North(int theSunlight){
@@ -27,8 +32,8 @@ public class North {
     System.out.println("You: I'm looking for some kind of jar with sunlight? ");
     System.out.println("Kyoshi: Ah, yes! You mean this?\n He steps aside, to reveal a stunning and intricate jar\n that glowed bright in the room." );
     System.out.println("1. Next");
-    choice = myScanner.nextInt();
-    if(choice ==1 ){
+    player.choice = myScanner.nextInt();
+    if(player.choice ==1 ){
        System.out.println("You run to it with your arms wide, but trip over a tight rope underneath your feet.");
     System.out.println("Kyoshi: Yeah, not so fast. To recieve this jar, you'll have to survive this challenge!");
 
@@ -41,15 +46,15 @@ public class North {
 
     }
     }else{
-      System.out.println("You have alrrady obtained this element!");
+      System.out.println("You have already obtained this element!");
       System.out.println("You need not come back here!");
-      crossRoad();
+      player.crossRoad();
     }
     }
 
 
 
-
+    //method to print pyramid/house options
     public void printPyramids(){
     System.out.println("1. View pyramids"); //PRINT pyramid options
     int viewchoice = myScanner.nextInt();
@@ -116,8 +121,9 @@ public class North {
                 System.out.println( "Congratulations!"+ " You guessed the number."); 
                 System.out.println("You have obtained the frozen sunglight!");
                 frozensunlight = 1;
-                collectedElements.add(" Frozen Sunlight ");
-                crossRoad();
+                //uses variable from Player set up by using the player object
+                player.collectedElements.add(" Frozen Sunlight ");
+                player.crossRoad();
                 break; 
             } else if (number > guess && i != 10 - 1) { 
                 System.out.println( 
@@ -131,16 +137,16 @@ public class North {
   
             System.out.println( "The number the mathematician was thinking of was " + number); 
             System.out.println("You return to the crossroad with shame....");
-            crossRoad();
+            player.crossRoad();
         } 
     }
     else if(pyramidchoice == 1 ){ //PYRAMID 1: weapon storage
       System.out.println("You enter a room full of weapons!");
-      System.out.println("You currently have the following weapons: " + playerWeapons); // shows current weapons
+      System.out.println("You currently have the following weapons: " + player.playerWeapons); // shows current weapons
       System.out.println("The scientist lets you take 2 weapons from the following options:");
       System.out.println("Press to 1 load weapon options"); //shows weapon options
-      choice = myScanner.nextInt();
-      if(choice == 1){
+      player.choice = myScanner.nextInt();
+      if(player.choice == 1){
 
       
       System.out.println("Sword\nDagger\nTrident\nSpear\nNet");
@@ -149,18 +155,18 @@ public class North {
       String firstWeaponChoice = myScanner.next();
       System.out.println("You second selection(Type in the weapon): "); // second choice
       String secondWeaponChoice = myScanner.next(); 
-      playerWeapons.add(firstWeaponChoice); //adds to weapon array list
-      playerWeapons.add(secondWeaponChoice); // adds to weapon array list
-      System.out.println("You now have the following weapons: " + playerWeapons);
+      player.playerWeapons.add(firstWeaponChoice); //adds to weapon array list
+      player.playerWeapons.add(secondWeaponChoice); // adds to weapon array list
+      System.out.println("You now have the following weapons: " + player.playerWeapons);
 
       System.out.println("\n------------------------------------------------------------------\n");
       System.out.println("You did not obtain the frozen sunlight");
       System.out.println("But you did earn new weapons which you might need!");
       System.out.println("Choose a different pyramid next time!");
-      crossRoad();
+      player.crossRoad();
       }else{
         System.out.println("You were not supposed to enter that!");
-        crossRoad();
+        player.crossRoad();
       }
 
 
@@ -176,7 +182,7 @@ public class North {
           int maxHealthofRobot = 80;
           System.out.println("\n------------------------------------------------------------------\n");
           String myArray[] = new String[1]; //creates array
-           myArray = playerWeapons.toArray(myArray); // convers to array
+          myArray = player.playerWeapons.toArray(myArray); // convers to array
           int creatureHealth = rand.nextInt(maxHealthofRobot); // rand num from 0 to 80;
           String creature = ("Robot"); 
           int damageMade = 25;
@@ -184,11 +190,11 @@ public class North {
           System.out.println();
           
           String weaponchoice; 
-          if(playerWeapons.size() > 1){
-            System.out.println("Your weapons" + playerWeapons);
-            weaponchoice = myArray[rand.nextInt(playerWeapons.size())]; // chooses random weapon(if multiple) for user.
+          if(player.playerWeapons.size() > 1){
+            System.out.println("Your weapons" + player.playerWeapons);
+            weaponchoice = myArray[rand.nextInt(player.playerWeapons.size())]; // chooses random weapon(if multiple) for user.
           }else{
-            weaponchoice = defaultPlayerWeapon; // if user does not have other weapons, they use default.
+            weaponchoice = player.defaultPlayerWeapon; // if user does not have other weapons, they use default.
           }
           
           //player encounters creature
@@ -196,7 +202,7 @@ public class North {
           System.out.println();
           System.out.println("You are using a " + weaponchoice + " as your weapon");
           while(creatureHealth > 0) { //player chooses what to do
-            System.out.println("\tYour HP: " + playerHP);
+            System.out.println("\tYour HP: " + player.playerHP);
             System.out.println("\t" + creature + "'s HP: " + creatureHealth);
             System.out.println("\nWhat are you gonna do?");
             System.out.println("\t1.Attack");
@@ -208,23 +214,23 @@ public class North {
               int damageTaken = rand.nextInt(AttackFromEnemy); //rand num from 0 to 25 for damage to player
 
                 creatureHealth -= damageDealt; //creature health loss
-                playerHP -= damageTaken; // user health loss
+                player.playerHP -= damageTaken; // user health loss
 
                 System.out.println("\t>You strike the " + creature + "for " + damageDealt + " damage.");
                 System.out.println("\t You recieve " + damageTaken + " in retaliation");
-                if(playerHP <= 0) {
+                if(player.playerHP <= 0) {
                   System.out.println("\t> You have taken too much damage. You are to weak to go on!");
-                  playerHP += 30;
-                  crossRoad();
+                  player.playerHP += 30;
+                  player.crossRoad();
                   break;
                 }
             }else if(input.equals("2")){
                 System.out.println("You try to run to another pyramid, but it is too far away!");
                 System.out.println("The robot tears you to pieces!");
-                dead();
+                Endings.dead();
             }
          }  
-         if(playerHP <1) {
+         if(player.playerHP <1) {
               System.out.println("You are too weak. You did not obtain the frozen sunlight");
               break;
             }
@@ -234,8 +240,9 @@ public class North {
           System.out.println(" # " + creature + " was defeated! # ");
           System.out.println("You obtained the frozen sunlight!");
           frozensunlight =1;
-          collectedElements.add(" Frozen Sunlight ");
-          crossRoad();
+          player.collectedElements.add(" Frozen Sunlight ");
+          //calls crossRoad method from PlayerSetUp class(player object)
+          player.crossRoad();
             }
           
 

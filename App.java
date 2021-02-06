@@ -7,199 +7,18 @@ import java.util.Arrays;
 import java.util.ArrayList;
 
 public class App {
+
   static Scanner myScanner = new Scanner(System.in);
-
-	static int playerHP;
-	static String playerName;
-	static String defaultPlayerWeapon;
-	static int choice;
-  
-  
-  //Elements
-	static int silverRing = 0;
-  static int sacredvenom = 0;
-  static int frozensunlight = 0;
-  static int spiritbook = 0;
-
-  static ArrayList<String> collectedElements = new ArrayList<String>(); //creates array list for the user's collected elements
-  static ArrayList<String> playerWeapons = new ArrayList<String>(); //creates array list for the user's weapons
-
-
+  //creates Player object
+	static PlayerSetUp player = new PlayerSetUp(); 
 	public static void main(String[] args) {
     
-		playerSetUp(); 	
-		townGate();
+	
+    player.printIntro();
+		player.townGate();
 	}
 	
-	public static void playerSetUp(){
-		
-		
-		playerHP = 90;
-	
-
-		defaultPlayerWeapon = "Knife";
-    playerWeapons.add(defaultPlayerWeapon); // ended up changing it to variable 
-    
-    System.out.println(" >> # WELCOME TO THE GAME OF ANACONDA # <<");
-
-		System.out.println("Your HP: "+ playerHP);
-		System.out.println("Your Current Weapon: "+ defaultPlayerWeapon);
-		
-		System.out.println("Please enter your name:");
-		
-		playerName = myScanner.nextLine();
-    	System.out.println("\n------------------------------------------------------------------\n");
-		
-    //Intro to the Game
-		System.out.println("Hello " + playerName + ", \nyou are one of the Dungeon's most aclaimed and beloved \nthieves.\nYou hold masteries in many arenas -- \nIdentity Theft \nSocial Enginnering \nManipulation \nIllusion");
-    	System.out.println("\n------------------------------------------------------------------\n");
-		
-    System.out.println("This season, the Lord of Thieves has chosen you to complete a \nstrenuous mission: Anaconda.");
-    System.out.println("Press 1 to continue ");
-    int first_choice = myScanner.nextInt();
-    if(first_choice == 1){
-      
-      System.out.println("\n----------------------------------------------------------------------\n");
-      System.out.println("Anaconda is known to be an impossible mission only legendary masterminds can complete it.\n >> You'll have to enter the Shorendia Castle with the identity of someone else, and ransack all the values you can find the time period...");
-      System.out.println("\n----------------------------------------------------------------------\n");
-      System.out.println("BUT BEFORE YOU ENTER, YOU MUST COLLECT ALL THE ELEMENTS");
-      System.out.println("The reason why this mission is difficult is because the guards will not let you in the Castle unless you have all of the elements they desire.");
-      System.out.println("You pack some random belongings to seem like an innocent traveller, and head to the main entrance of the KingDom");
-      System.out.println("To start your mission press 1");
-      first_choice = myScanner.nextInt();
-      while(first_choice != 1){
-        System.out.println("To start your mission press 1");
-        first_choice = myScanner.nextInt();
-      }
-      
-    }else {
-      	System.out.println("\n------------------------------------------------------------------\n");
-        System.out.println("Invalid input. Try again.");
-        playerSetUp();
-    }
-		
-		
-	}	
-	
-  // The town gate
-	public static void townGate(){
-		
-		System.out.println("\n------------------------------------------------------------------\n");
-		System.out.println("You are at the gate of the Kingdom.");
-		System.out.println("A guard is standing in front of you.");
-		System.out.println("");
-		System.out.println("What do you want to do?");
-		System.out.println("");
-		System.out.println("1: Talk to the guard");
-		System.out.println("2: Sneak past the guard");
-		System.out.println("3: Leave");
-		System.out.println("\n------------------------------------------------------------------\n");
-
-		choice = myScanner.nextInt();
-		
-
-		if(choice==1){
-			if(silverRing > 0 && sacredvenom > 0 && frozensunlight > 0  && spiritbook > 0){ // if user collected all elements
-				ending();
-			}
-			else{
-				System.out.println("Guard: 'Hello there, stranger. So your name is " + playerName + "?'");
-        System.out.println("You: 'Yes, I'm a goods trader from the Southern Tribe', you lie.");
-				System.out.println("Guard: 'We cannot let you in yet, as you dont contain the items of purity \nand verification. \n These include: \n The Sacred Venom \n The Spirit Book \n The Frozen Sunlight \n and The Silver Ring'");
-        System.out.println("Guard: 'Take the crossroad on the right and start searching there.'");
-        System.out.println("1. Go to the crossroad");
-        choice = myScanner.nextInt();
-        if(choice == 1){
-          crossRoad();
-        }else {
-          System.out.println("Invalid Command!");
-          System.out.println("Try again!");
-          townGate();
-        }
-       
-
-			}
-			
-		}
-		else if(choice==2){
-			playerHP = playerHP-1;
-			System.out.println("Guard: Wrong choice. \n\nThe guard arrests you, and shoots down your horse.\n");
-      dead();
-		}
-		else if(choice==3){
-			System.out.println("You leave in the search of crossroad to go back to your Dungeon");
-      System.out.println("When you return to the Dungeon, the King of thieves is disappointed to see you empty-handed and your reputation falls.....");
-      System.out.println(">># MISSION FAILED #<<");
-      	
-		}	
-		else{
-			townGate();
-		}
-	}
-	
-
-  // The crossroad
-	public static void crossRoad(){
-     if(silverRing > 0 && sacredvenom > 0 && frozensunlight  > 0 && spiritbook > 0) { //if user collected all elements
-      System.out.println("\n----------------------CROSSROAD---------------------------------------\n");
-      System.out.println("You have obtained all the elements! Head back to the gate of the kingdom!");
-      System.out.println("5. Go back to the castle's entrance");
-      System.out.println("\n----------------------------------------------------------------\n");
-      choice = myScanner.nextInt();
-      if(choice == 5){
-        townGate();
-      }else {
-        System.out.println("Invalid command!");
-        crossRoad();
-      }
-    }else{
-      System.out.println("\n----------------------CROSSROAD---------------------------------------\n");
-		System.out.println("You are at the cross road. \n You do not have all the items the guards desire, yet.\n You can return to the castle's entrance, by hitting 5\n ");
-
-
-    if(collectedElements.size() == 0){ // if user has no elements
-      System.out.println("You currently have obtained the following element(s): [none]");
-    }else{
-      System.out.println("You currently have obtained the following element(s): " + collectedElements); // print what elements user currently has
-    }
-    System.out.println("1: Go north, to Wizard Kyoshi's place");
-		System.out.println("2: Go east, to the Cobra's Temple");
-		System.out.println("3: Go south, to the underground Library");
-		System.out.println("4: Go west, to the Enchanted Forest");
-    System.out.println("5. Go back to the castle's entrance");
-		System.out.println("\n----------------------------------------------------------------\n");
-		
-		choice = myScanner.nextInt();
-		
-		if(choice==1){ //to the north
-
-     //creates north object
-      North northOption = new North(frozensunlight);
-			northOption.meetKyoshi();
-		}
-		else if(choice==2){ //to the east
-			east();
-		}
-		else if(choice==3){ // to the south
-			south();
-		}
-		else if(choice==4){ // to the west
-			west();
-		}
-    else if(choice == 5){ //back to entrance of Kingdom
-      townGate();
-    }
-		else{
-      System.out.println("Invalid input!");
-			crossRoad(); 
-		}
-    }
-		}
-	
-
-
-
-  // To the east
+// To the east
 	public static void east(){
     Scanner riddle = new Scanner(System.in);
     //encounters cobra
@@ -242,9 +61,10 @@ public class App {
           if(userAnswer.equals("Fire") || userAnswer.equals("fire")){ // if guess is correct
            System.out.println("That is correct!");
            System.out.println("The answer was FIRE! You obtained the sacred venom!!");
-           sacredvenom = 1;
-           collectedElements.add(" Sacred Venom ");
-           crossRoad();
+           player.getVenom();
+           player.changeVenom(1);
+           player.collectedElements.add(" Sacred Venom ");
+           player.crossRoad();
            break;
            
          }
@@ -256,7 +76,7 @@ public class App {
          askHints(hints);
          if(hints < 1){
            System.out.println("You return to the crossroad with shame");
-           crossRoad();
+           player.crossRoad();
          }
        }else{
          System.out.println("Invalid command!");
@@ -267,7 +87,7 @@ public class App {
       System.out.println("You have run out of tries!"); // over 3 tries
       System.out.println("The Cobra laughs and you exit the temple in shame");
       System.out.println("You did not recieve the sacred venom");
-      crossRoad();
+      player.crossRoad();
      }
       
     
@@ -307,7 +127,7 @@ public class App {
     int AttackfromEnemy = 25;
 
     //user variables
-    playerHP = 90;
+    player.playerHP = 90;
     int damageMade = 25;
     int healthPotions = 2;
     int potionsHealing = 20;
@@ -325,7 +145,7 @@ public class App {
           System.out.println("\t# A " + enemy + " appeared!! #\n");
 
           while(enemyHealth > 0) { //player chooses what to do
-            System.out.println("\tYour HP: " + playerHP);
+            System.out.println("\tYour HP: " + player.playerHP);
             System.out.println("\t" + enemy + "'s HP: " + enemyHealth);
             System.out.println("\nWhat are you gonna do?");
             System.out.println("\t1. Attack");
@@ -338,21 +158,21 @@ public class App {
                int damageTaken = rand.nextInt(AttackfromEnemy); //rand num from 0 to 25 for damage to player
 
                 enemyHealth -= damageDealt; //enemy health
-                playerHP -= damageTaken; // user health
+                player.playerHP -= damageTaken; // user health
 
                 System.out.println("\t>You strike the " + enemy + "for " + damageDealt + " damage.");
                 System.out.println("\t You recieve " + damageTaken + " in retaliation");
-                if(playerHP <= 0) {
+                if(player.playerHP <= 0) {
                   System.out.println("\t> You have taken too much damage. You are to weak to go on!");
-                  crossRoad();
+                  player.crossRoad();
                   break;
                 }
 
             }else if(input.equals("2")){ // CHOICE 2
                     if(healthPotions > 0){
-                      playerHP += potionsHealing;
+                      player.playerHP += potionsHealing;
                       healthPotions--;
-                      System.out.println("You drink a health potion, healing yourself for "+ potionsHealing + ".\n\t> You now have" + playerHP + " HP."
+                      System.out.println("You drink a health potion, healing yourself for "+ potionsHealing + ".\n\t> You now have" + player.playerHP + " HP."
                       + "\n\t> You have " + healthPotions + "left.\n");
                     }else {
                         System.out.println("\t> You have no health potions left \n Defeat enemies for a chance to earn one");
@@ -368,15 +188,16 @@ public class App {
           }
 
               
-            if(playerHP <1) {
+            if(player.playerHP <1) {
               System.out.println("You limp out in the forest, unable to get obtain the Silver Ring ");
               break;
             }
                   System.out.println("\n------------------------------------------------------------------\n");
                   System.out.println(" # " + enemy + " was defeated! # ");
                   System.out.println("You obtained the silver Ring");
-                  silverRing = 1;
-                  collectedElements.add(" Silver Ring ");
+                  player.getRing();
+                  player.changeRing(1);
+                  player.collectedElements.add(" Silver Ring ");
             if(rand.nextInt(100) < potionsFromEnemies) {
               healthPotions++;
               System.out.println(" # The " + enemy + " dropped a health potion! # ");
@@ -398,7 +219,7 @@ public class App {
               System.out.println("You continue fighting!");
             }else if ( input.equals("2")) { //option 2
               System.out.println("You return to the cross road");
-              crossRoad();
+              player.crossRoad();
               break;
               
             }
@@ -438,7 +259,7 @@ public class App {
     int librarychoice = myScanner.nextInt();
     if(librarychoice == 1){ //choice 1 (run)
       System.out.println("you attempt to escape through the exit, but the spirit just laughs, and terminates the oxygen in the library, leading to your suffocation");
-      dead();
+      Endings.dead();
     }else if(librarychoice == 2){ //choice 2(talk with the spirit)
       System.out.println("Instead of running, you speak to spirit.");
       System.out.println("You: 'I am a Royal Guard serving the King of Sostesia, I have come here to retrieve the Spriit Book in His Highness's request', you lie.");
@@ -515,14 +336,16 @@ public class App {
         }
         if(chances > 15) {
           System.out.println("You took over the 15 chances the Spirit gave YOU!, and didn't guess the word!\n The Spirit turns you into stone as a result of your stupidity!");
-          dead();
+          Endings.dead();
         }else {
             System.out.println("You guessed the entire word " + wordToGuess.toUpperCase() + " correctly! It took you " + chances + " attempts!");
             System.out.println("The Spirit proudly hands you the Spirit book and you leave the deadly library, obtaining another element!");
             System.out.println("You head back to the crossroad, don't come back to the library, as you already have the spritbook!");
-            spiritbook = 1;
-            collectedElements.add(" Spirit Book ");
-            crossRoad();
+            
+            player.getBook();
+            player.changeBook(1);
+            player.collectedElements.add(" Spirit Book ");
+            player.crossRoad();
         }
       
     }
@@ -531,30 +354,13 @@ public class App {
       System.out.println("\n------------------------------------------------------------------\n");
       System.out.println("You touch the book and it turns out the rumours are true!");
       System.out.println("You turn into the book of pages and the spirit places 'you' onto the wooden shelf where you will remain for eternity!");
-      dead();
+      Endings.dead();
     }else{
       System.out.println("Invalid Command!");
-      dead();
+      Endings.dead();
     }
 }
-
-  public static void dead(){
-		System.out.println("\n------------------------------------------------------------------\n");
-		System.out.println("You are dead!!!");
-		System.out.println("\n\nGAME OVER");
-		System.out.println("\n------------------------------------------------------------------\n");
-    
-		
-	}
-	
-	
-	
-	public static void ending(){
-		System.out.println("\n------------------------------------------------------------------\n");
-    System.out.println("YOU HAVE COLLECTED ALL THE ELEMENTS!");
-		System.out.println("Guard: WOW! You really are a brave soul! Welcome to Solsasia!");
-		System.out.println("The guard opens the front entrance, and you enter the kingdom...ready to ransack it all....");
-		System.out.println("\n\n           THE END                    ");
-		System.out.println("\n------------------------------------------------------------------\n");
-	}
 }
+
+
+ 
