@@ -5,7 +5,7 @@ import java.util.Scanner;
 public class North {
     
     //player object 
-   	static PlayerSetUp player = new PlayerSetUp(); 
+    static PlayerSetUp player = new PlayerSetUp(); 
     static Scanner myScanner = new Scanner(System.in);
    
    //Static instance variable
@@ -121,6 +121,8 @@ public class North {
                 System.out.println( "Congratulations!"+ " You guessed the number."); 
                 System.out.println("You have obtained the frozen sunglight!");
                 frozensunlight = 1;
+                player.getSunlight();
+                player.changeSunlight(1);
                 //uses variable from Player set up by using the player object
                 player.collectedElements.add(" Frozen Sunlight ");
                 player.crossRoad();
@@ -201,6 +203,7 @@ public class North {
           System.out.println("\t# The " + creature + " appeared!! #\n");
           System.out.println();
           System.out.println("You are using a " + weaponchoice + " as your weapon");
+          
           while(creatureHealth > 0) { //player chooses what to do
             System.out.println("\tYour HP: " + player.playerHP);
             System.out.println("\t" + creature + "'s HP: " + creatureHealth);
@@ -228,6 +231,8 @@ public class North {
                 System.out.println("You try to run to another pyramid, but it is too far away!");
                 System.out.println("The robot tears you to pieces!");
                 Endings.dead();
+                
+                break;
             }
          }  
          if(player.playerHP <1) {
@@ -240,6 +245,8 @@ public class North {
           System.out.println(" # " + creature + " was defeated! # ");
           System.out.println("You obtained the frozen sunlight!");
           frozensunlight =1;
+          player.getSunlight();
+          player.changeSunlight(1);
           player.collectedElements.add(" Frozen Sunlight ");
           //calls crossRoad method from PlayerSetUp class(player object)
           player.crossRoad();

@@ -13,8 +13,9 @@ public class App {
 	static PlayerSetUp player = new PlayerSetUp(); 
 	public static void main(String[] args) {
     
-	
+	  // calls Intro method from PlayerSetUp class
     player.printIntro();
+    // townGate method from PlayerSetUp class
 		player.townGate();
 	}
 	
