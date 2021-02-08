@@ -9,7 +9,7 @@ import java.util.ArrayList;
 public class PlayerSetUp {
  static Scanner myScanner = new Scanner(System.in);
 
-	 static int playerHP= 90;
+	 static int playerHP;
 	 static String playerName;
 	 static String defaultPlayerWeapon = "Knife";
 	 static int choice;
@@ -42,8 +42,9 @@ public class PlayerSetUp {
 
 
 
+
  //GETTER METHODS FOR ELEMENTS
- public  int getRing(){
+ public int getRing(){
    return silverRing;
  }
  public  int getVenom(){
@@ -55,15 +56,30 @@ public class PlayerSetUp {
  public  int getBook(){
    return spiritbook;
  }
+
+ public int getChoice(){
+  return choice;
+}
+
+  
+  
      //Constructor
 	  public PlayerSetUp() {
-    System.out.println("Please enter your name:");
-		 playerName = myScanner.nextLine();
+     System.out.println("Enter your name");
+     playerName = myScanner.nextLine();
      playerHP = 90;
      defaultPlayerWeapon = "Knife";
      playerWeapons.add(defaultPlayerWeapon); 
      
   }	
+     //this constructor takes in one parameter
+    public PlayerSetUp(int TheHp){
+     playerHP = TheHp;
+     System.out.println("Enter your name: ");
+     playerName = myScanner.nextLine();
+     defaultPlayerWeapon = "Knife";
+     playerWeapons.add(defaultPlayerWeapon); 
+    }
 
 
 	public static void printIntro(){
@@ -164,6 +180,7 @@ public class PlayerSetUp {
 
   // The crossroad
 	public static void crossRoad(){
+
      if(silverRing > 0 && sacredvenom > 0 && frozensunlight  > 0 && spiritbook > 0) { //if user collected all elements
       System.out.println("\n----------------------CROSSROAD---------------------------------------\n");
       System.out.println("You have obtained all the elements! Head back to the gate of the kingdom!");
@@ -198,7 +215,8 @@ public class PlayerSetUp {
 		if(choice==1){ //to the north
 
      //creates north object
-      North northOption = new North(frozensunlight);
+      
+      North northOption = new North();
 			northOption.meetKyoshi();
 		}
 		else if(choice==2){ //to the east
@@ -219,6 +237,4 @@ public class PlayerSetUp {
 		}
     }
 		}
-	
-	
-}
+	}

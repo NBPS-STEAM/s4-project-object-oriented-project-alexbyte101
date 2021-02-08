@@ -5,16 +5,28 @@ import java.util.Scanner;
 public class North {
     
     //player object 
-    static PlayerSetUp player = new PlayerSetUp(); 
+     
     static Scanner myScanner = new Scanner(System.in);
-   
+    static PlayerSetUp player = new PlayerSetUp();
    //Static instance variable
    private static int frozensunlight;
+   private static PlayerSetUp user;
 
   //north constructor(takes in element as parameter)
-	public North(int theSunlight){
+  public North(int theSunlight){
     frozensunlight = theSunlight;
   }
+  //overloading constructor
+  public North(int theSunlight, PlayerSetUp theUser){
+    frozensunlight = theSunlight;
+    user = theUser;
+  }
+  //overloading constructor(takes in no parameters)
+  public North(){
+    frozensunlight = 0;
+    user = player;
+  }
+
 
    //method for meeting kyoshi
   public void meetKyoshi(){
@@ -32,8 +44,8 @@ public class North {
     System.out.println("You: I'm looking for some kind of jar with sunlight? ");
     System.out.println("Kyoshi: Ah, yes! You mean this?\n He steps aside, to reveal a stunning and intricate jar\n that glowed bright in the room." );
     System.out.println("1. Next");
-    player.choice = myScanner.nextInt();
-    if(player.choice ==1 ){
+    user.choice = myScanner.nextInt();
+    if(user.choice ==1 ){
        System.out.println("You run to it with your arms wide, but trip over a tight rope underneath your feet.");
     System.out.println("Kyoshi: Yeah, not so fast. To recieve this jar, you'll have to survive this challenge!");
 
@@ -48,7 +60,7 @@ public class North {
     }else{
       System.out.println("You have already obtained this element!");
       System.out.println("You need not come back here!");
-      player.crossRoad();
+      user.crossRoad();
     }
     }
 
